@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- This code is a modified version of the O/S example at…
+    https://github.com/OrdnanceSurvey/OS-Data-Hub-API-Demos (OSVectorTileAPI/MapboxGLJS)
+    and requires the dp-maps-api to be running with a correctly configured O/S api key -->
+
+    <title>Maps API OS Vector Proxy</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet'/>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet" />
+
+    <style>
+        /* Set the document to use flexbox layout */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* ensure the map fills as much of the screen as possible */
+        #map {
+            flex: 1 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script type="text/javascript">
+
+    // This sets up the actual VTS layer
+    // Center coordinates are defined in EPSG:3857 lon/lat and we are asking for srs=3857 in the "transformRequest"
+    var serviceUrl = "http://localhost:27900/maps/vector/v1/vts";
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: serviceUrl + '/resources/styles?',
+        center: [-1.608411, 54.968004],
+        zoom: 9,
+        maxZoom: 15,
+        transformRequest: url => {
+            url += '&srs=3857';
+            return {
+                url: url
+            }
+        }
+    });
+
+    map.addControl(new mapboxgl.AttributionControl({
+        customAttribution: '&copy; <a href="http://www.ordnancesurvey.co.uk/">Ordnance Survey</a>'
+    }));
+
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
+
+    map.on('error', error => {
+        console.log(error);
+    });
+</script>
+</body>
+</html>
