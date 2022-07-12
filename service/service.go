@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"net/url"
 
 	"github.com/ONSdigital/dp-maps-api/api"
 	"github.com/ONSdigital/dp-maps-api/config"
@@ -35,7 +36,18 @@ func Run(ctx context.Context, cfg *config.Config, serviceList *ExternalServiceLi
 	// TODO: Add other(s) to serviceList here
 
 	// Setup the API
-	a := api.Setup(ctx, r)
+	osURL, err := url.Parse(cfg.OrdnanceSurveyAPIURL)
+	if err != nil {
+		log.Fatal(ctx, "configuration value is invalid", err, log.Data{"config_name": "OrdnanceSurveyAPIURL", "value": cfg.OrdnanceSurveyAPIURL})
+		return nil, err
+	}
+	apiCfg := api.Config{
+		MapsAPIURL:           cfg.MapsAPIURL,
+		OrdnanceSurveyAPIURL: osURL,
+		OrdnanceSurveyAPIKey: cfg.OrdnanceSurveyAPIKey,
+		CacheMaxAge:          cfg.CacheMaxAge,
+	}
+	a, err := api.Setup(ctx, apiCfg, r)
 
 	hc, err := serviceList.GetHealthCheck(cfg, buildTime, gitCommit, version)
 

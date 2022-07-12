@@ -10,24 +10,15 @@ basePath: "/v1"
 schemes:
   - http
 tags:
-  - name: "hello"
+  - name: "proxy"
   - name: "private"
 paths:
-  /hello:
+  /maps/vector/v1/vts:
     get:
       tags:
-        - hello
-      summary: Example hello world endpoint
-      description: Returns an example payload.
-      produces:
-        - application/json
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: "#/definitions/HelloResponse"
-        500:
-          $ref: '#/responses/InternalError'
+        - proxy
+      summary: Reverse Proxy for the Ordnance Survey API
+      description: Forwards requests to Ordnance Survey and returns responses.
 
   /health:
     get:
@@ -52,20 +43,13 @@ responses:
     description: "Failed to process the request due to an internal error"
 
 definitions:
-  HelloResponse:
-    type: object
-    properties:
-      message:
-        type: string
-        description: "Message returned by hello world endpoint"
-        example: "Hello, world!"
   Health:
     type: object
     properties:
       status:
         type: string
         description: "The status of the API"
-        enum: ["OK", "WARNING", "CRITICAL"]
+        enum: [ "OK", "WARNING", "CRITICAL" ]
       version:
         type: object
         properties:
@@ -107,11 +91,11 @@ definitions:
       name:
         type: string
         description: "The name of external service used by API"
-        enum: ["mongodb"]
+        enum: [ "mongodb" ]
       status:
         type: string
         description: "The status of the external service"
-        enum: ["OK", "WARNING", "CRITICAL"]
+        enum: [ "OK", "WARNING", "CRITICAL" ]
       message:
         type: string
         description: "The message status of the external service"

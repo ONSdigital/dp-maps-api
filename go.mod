@@ -1,6 +1,6 @@
 module github.com/ONSdigital/dp-maps-api
 
-go 1.17
+go 1.18
 
 require (
 	github.com/ONSdigital/dp-component-test v0.6.5

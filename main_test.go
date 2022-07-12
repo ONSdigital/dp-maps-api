@@ -5,7 +5,6 @@ import (
 	"os"
 	"testing"
 
-	componenttest "github.com/ONSdigital/dp-component-test"
 	"github.com/ONSdigital/dp-maps-api/features/steps"
 	"github.com/cucumber/godog"
 	"github.com/cucumber/godog/colors"
@@ -13,9 +12,7 @@ import (
 
 var componentFlag = flag.Bool("component", false, "perform component tests")
 
-type ComponentTest struct {
-	MongoFeature *componenttest.MongoFeature
-}
+type ComponentTest struct{}
 
 func (f *ComponentTest) InitializeScenario(ctx *godog.ScenarioContext) {
 	component, err := steps.NewComponent()
