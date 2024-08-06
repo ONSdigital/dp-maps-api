@@ -1,3 +1,4 @@
+// Deprecated: No longer in active development
 module github.com/ONSdigital/dp-maps-api
 
 go 1.19

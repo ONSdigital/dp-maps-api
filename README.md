@@ -1,3 +1,5 @@
+⚠️ This repository will be archived in August 2024 as it is no longer in development. ⚠️
+
 # dp-maps-api
 Maps API for the ONSWebsite. Provides OS maps.
 
